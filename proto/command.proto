@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option go_package = "github.com/libmojito/tavern/proto";
+
+package tavern;
+
+service CommandServer {
+    rpc Run (CommandRequest) returns (CommandReply) {}
+}
+
+message CommandRequest {
+    repeated string args = 1;
+}
+
+message CommandReply {
+    int32 status = 1;
+    string stdout = 3;
+    string stderr = 2;
+}

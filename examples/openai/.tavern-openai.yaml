@@ -1,0 +1,5 @@
+---
+tavern:
+  openai:
+    apikey: ""
+...

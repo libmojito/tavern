@@ -1,0 +1,12 @@
+---
+tavern:
+  cmds:
+    - use: "hello"
+      short: "hello command"
+      long: "long hello command"
+      address: "localhost:50051"
+    - use: "openai"
+      short: "openai utils"
+      long: "openai utils"
+      address: "localhost:50052"
+...
