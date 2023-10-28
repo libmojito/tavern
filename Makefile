@@ -1,16 +1,20 @@
+grpc_targets := proto/command.pb.go proto/command_grpc.pb.go
+
 .PHONY: build
-build: vet test
+build: test vet
+	go build .
+
+$(grpc_targets): proto/command.proto
 	protoc --go_out=. --go_opt=paths=source_relative \
 		--go-grpc_out=. --go-grpc_opt=paths=source_relative \
 		proto/command.proto
-	go build .
 
 .PHONY: test
-test:
+test: $(grpc_targets)
 	go test .
 
 .PHONY: vet
-vet:
+vet: $(grpc_targets)
 	go vet
 
 .PHONY: clean
