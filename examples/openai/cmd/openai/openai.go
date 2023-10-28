@@ -24,7 +24,6 @@ func NewCmd(opts ...func(*cobra.Command)) *cobra.Command {
 	cmd.AddCommand(NewCompletionCmd(opts...))
 
 	return cmd
-
 }
 
 func NewCmdOpts(cmd *cobra.Command, opts ...func(*cobra.Command)) *cobra.Command {

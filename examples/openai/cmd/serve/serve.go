@@ -32,7 +32,11 @@ func (s *commandServer) Run(ctx context.Context, req *proto.CommandRequest) (*pr
 
 	err := cmd.Execute()
 	if err != nil {
-		return nil, err
+		return &proto.CommandReply{
+			Status: 1,
+			Stdout: ow.String(),
+			Stderr: ew.String(),
+		}, nil
 	}
 
 	return &proto.CommandReply{

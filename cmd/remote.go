@@ -20,7 +20,7 @@ type remoteCommand struct {
 	Address string
 }
 
-func (rCmd *remoteCommand) run(cmd *cobra.Command, args []string) {
+func (rCmd *remoteCommand) run(cmd *cobra.Command, args []string) error {
 	conn, err := grpc.Dial(rCmd.Address, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("fail to dial: %v", err)
@@ -33,12 +33,18 @@ func (rCmd *remoteCommand) run(cmd *cobra.Command, args []string) {
 	if err != nil {
 		log.Fatalf("failed: %v", err)
 	}
+	err = nil
+	if reply.Status != 0 {
+		err = fmt.Errorf("Error: %d", reply.Status)
+	}
 	if reply.Stderr != "" {
 		cmd.PrintErr(reply.Stderr)
 	}
 	if reply.Stdout != "" {
 		cmd.Print(reply.Stdout)
 	}
+
+	return err
 }
 
 func init() {
@@ -72,7 +78,7 @@ func init() {
 			DisableFlagParsing: true, // flag parsing is handled by remote
 			Short:              cmdCopy.Short,
 			Long:               cmdCopy.Long,
-			Run:                cmdCopy.run,
+			RunE:               cmdCopy.run,
 		})
 	}
 
