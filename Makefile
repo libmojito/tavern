@@ -37,3 +37,8 @@ examples:
 run-examples: examples
 	go run -C examples/openai . serve --port 50052 & \
 	go run -C examples/hello . serve --port 50051
+
+.PHONY:
+update:
+	go get -u
+	go mod tidy
