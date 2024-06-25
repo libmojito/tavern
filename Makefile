@@ -22,6 +22,11 @@ clean:
 	rm proto/*.pb.go
 	go clean ./...
 
+.PHONY:
+update:
+	go get -u
+	go mod tidy
+
 .PHONY: examples
 examples:
 	protoc --go_out=examples/openai --go_opt=paths=source_relative \
@@ -38,7 +43,10 @@ run-examples: examples
 	go run -C examples/openai . serve --port 50052 & \
 	go run -C examples/hello . serve --port 50051
 
-.PHONY:
-update:
-	go get -u
-	go mod tidy
+
+.PHONY: update-examples
+update-examples:
+	go -C examples/openai get -u
+	go -C examples/openai vet
+	go -C examples/hello get -u
+	go -C examples/hello vet
