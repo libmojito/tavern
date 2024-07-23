@@ -22,7 +22,7 @@ clean:
 	rm proto/*.pb.go
 	go clean ./...
 
-.PHONY:
+.PHONY: update
 update:
 	go get -u
 	go mod tidy
